@@ -1,2 +1,2 @@
-# calc-num
-Repositório que contém projetos de estudo desenvidos na disciplina de Cálculo Numérico  
+# Cálculo numérico
+Repositório que contém projetos de estudo desenvidos durante as aulas de Cálculo Numérico  
