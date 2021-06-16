@@ -82,7 +82,7 @@ class IterativeMethods:
 
         iter_ = 0
 
-        while(abs(b - a) > self.tol):
+        while(iter_ <= self.maxiter and abs(b - a) > self.tol):
             x = round((a + b)/2, self.round_)      
 
             f_a = self.f(a)
@@ -97,7 +97,10 @@ class IterativeMethods:
             iter_ += 1
             if verbose:
                 print(f'Iteração: {iter_} \t Aproximação: {x}')
-        return {'iter':iter_, 'raiz': x}
+        if iter_ > self.maxiter:
+            print("Número máximo de iterações alcançado!")
+        else:
+            return {'iter':iter_, 'raiz': x}
     
     def fixedpoint(self, x, g, verbose=False):
         '''
