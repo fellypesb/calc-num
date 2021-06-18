@@ -129,13 +129,8 @@ class IterativeMethods:
         '''
         
         iter_ = 0 
-        xj = x # anterior
-        xi = x # atual
-        err = np.inf
-        while( iter_ <= self.maxiter and abs(err) > self.tol):
-            xi = round(g(xj), self.round_)
-            err = (xi-xj)
-            xj = xi
+        while( iter_ <= self.maxiter and abs(self.f(x)) > self.tol):
+            x = round(g(x), self.round_)
             iter_ += 1
             if verbose:
                 print(f'Iterações: {iter_} \t Aproximação: {xi}') 
@@ -180,20 +175,20 @@ class IterativeMethods:
         else:
             return {'iter':iter_, 'raiz': x}
         
-    def secant(self, x1, x2, verbose=False):
+    def secant(self, x0, x1, verbose=False):
         '''
             Função que calcula o zero de funções com o método da Secante.
             
             O método iterativo é realizado da Seguinte forma:
 
-            x2 = (x1*f(x2) - x2*f(x1)) / (f(x2) - f(x1))  
+            x1 = (x0*f(x1) - x1*f(x0)) / (f(x1) - f(x0))  
 
             Parametros
             --------------
-            x1: float
+            x0: float
                 Primeiro chute inicial.
 
-            x2: float
+            x1: float
                 Segundo chute inicial.
 
             verbose: bool, default=False
@@ -206,15 +201,15 @@ class IterativeMethods:
         '''
         iter_ = 0
 
-        while( iter_ <= self.maxiter and abs(self.f(x2)) > self.tol):
-            c = x2
-            x2 = round((x1*self.f(x2) - x2*self.f(x1)) / (self.f(x2) - self.f(x1)), self.round_)
-            x1 = c
+        while( iter_ <= self.maxiter and abs(self.f(x1)) > self.tol):
+            c = x1
+            x1 = round((x0*self.f(x1) - x1*self.f(x0)) / (self.f(x1) - self.f(x0)), self.round_)
+            x0 = c
             iter_ += 1
             if verbose:
-                print(f'Iterações: {iter_} \t Raiz: {x2}')
+                print(f'Iterações: {iter_} \t Raiz: {x1}')
 
         if iter_ > self.maxiter:
             print("Número máximo de iterações alcançado!")
         else:
-            return {'iter':iter_, 'raiz': x2}
+            return {'iter':iter_, 'raiz': x1}
